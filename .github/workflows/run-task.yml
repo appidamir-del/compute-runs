@@ -1,0 +1,28 @@
+name: run-task
+
+on:
+  workflow_dispatch:
+    inputs:
+      chunk_id:
+        description: "Task chunk folder under tasks/"
+        required: true
+        type: string
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run task chunk
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          bash "tasks/${{ inputs.chunk_id }}/run.sh"
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: "results-${{ inputs.chunk_id }}"
+          path: results/
+          retention-days: 7
+          if-no-files-found: warn
