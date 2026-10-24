@@ -1,0 +1,66 @@
+{
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "config": {
+    "r": [
+      15,
+      50
+    ],
+    "y0": [
+      1.0,
+      1.001
+    ],
+    "scale": [
+      20.0,
+      30.0,
+      60.0
+    ],
+    "conv_T": 1.0,
+    "sample_dt": 0.001,
+    "euler_steps": [
+      0.001,
+      0.0005,
+      0.00025,
+      0.000125,
+      6.25e-05,
+      3.125e-05,
+      1.5625e-05
+    ],
+    "reference": [
+      1e-11,
+      1e-13,
+      0.01
+    ],
+    "reference_tight": [
+      1e-13,
+      1e-15,
+      0.005
+    ],
+    "lyap_T": 600.0,
+    "burn": 100.0,
+    "block": 50.0,
+    "qr": 0.1,
+    "rk_steps": [
+      0.01,
+      0.005,
+      0.0025
+    ],
+    "gates": {
+      "order": [
+        0.85,
+        1.15
+      ],
+      "accuracy": 0.001,
+      "reference_abs": 1e-06,
+      "reference_frac": 0.01,
+      "trace": 0.01,
+      "lyap_refinement": 0.15,
+      "r15_analytic": 0.03,
+      "r50_positive": 0.1,
+      "r50_zero": 0.1,
+      "lyap_tail": 0.15
+    }
+  }
+}
