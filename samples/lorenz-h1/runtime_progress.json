@@ -1,0 +1,10 @@
+{
+  "run_id": "H1-V4-STANDALONE-COLOR-20261005",
+  "status": "COMPLETE",
+  "phase": "all",
+  "completed_units": 18,
+  "total_units": 18,
+  "finished_at": "2026-10-24T06:30:54.122213+00:00",
+  "protocol_hash": "7b460b9f5e230bab1ff5bedc0ff3f0fbf98492e6a04148e7c2334ec91c6db36c",
+  "config_hash": "f10c98d7972106cd413b3a47cccc8d26f2d45feaeb2ed3a5e25d939980860a74"
+}
