@@ -1,0 +1,23 @@
+{
+  "run_id": "H1-V4-STANDALONE-COLOR-20261005",
+  "gates": {
+    "convergence_all": false,
+    "trace_all": true,
+    "r15_dt": true,
+    "r15_qr": true,
+    "r15_analytic": true,
+    "r50_dt": true,
+    "r50_qr": true,
+    "r50_positive_zero": true,
+    "r50_initial_condition": true,
+    "r50_tail": true
+  },
+  "overall": "NOT_ALL_GATES_PASS",
+  "limits": [
+    "Finite-horizon numerical evidence, not a proof of asymptotic chaos",
+    "No transition-distance or turbulence transfer",
+    "Frozen V2 numerical/diagnostic scope only"
+  ],
+  "config_hash": "f10c98d7972106cd413b3a47cccc8d26f2d45feaeb2ed3a5e25d939980860a74",
+  "protocol_hash": "7b460b9f5e230bab1ff5bedc0ff3f0fbf98492e6a04148e7c2334ec91c6db36c"
+}
