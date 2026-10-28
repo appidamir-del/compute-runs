@@ -33,3 +33,15 @@ generic, sanitized compute tasks on GitHub Actions (free for public repos,
 - `samples/` — the exception: a finished run kept in the repo as a public
   example, only when the owner explicitly asks for it. See
   `samples/lorenz-h1/` for the first sample.
+
+## Samples
+
+- `samples/lorenz-h1/` — first sample (2026-10-24).
+- `samples/projection-method/` — Chorin projection method exercise
+  (code, figure, metrics, Persian article).
+- `samples/hiemenz/` — Hiemenz stagnation-point exercise
+  (corrected question, RK4 code, metrics, Persian article).
+
+The two new samples were added on 2026-10-28 at the owner's explicit
+request. Samples are the exception: by default, results here leave
+only as workflow artifacts.
