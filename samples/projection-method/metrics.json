@@ -1,0 +1,22 @@
+{
+  "method": "Chorin projection, doctor's sign convention (pi = -p, rho=1)",
+  "grid": "64x64 periodic, L=2*pi",
+  "nu": 0.1,
+  "dt": 0.005,
+  "nsteps": 200,
+  "t_end": 1.0,
+  "test_A_pure_projection": {
+    "max_div_before": 0.6000000000000436,
+    "max_div_after": 1.002155615808793e-14,
+    "max_recovery_error_u": 5.551115123125783e-16,
+    "max_recovery_error_v": 5.551115123125783e-16
+  },
+  "test_B_taylor_green": {
+    "max_div_after_correction_over_all_steps": 1.1366195829797869e-14,
+    "max_div_of_intermediate_field": 0.010000000000003102,
+    "energy_final_numeric": 0.16754647650168508,
+    "energy_final_exact": 0.16758001150890983,
+    "energy_relative_error_final": 0.0002001134080538406,
+    "energy_max_relative_error": 0.0002001134080538406
+  }
+}
