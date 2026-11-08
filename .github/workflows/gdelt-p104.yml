@@ -1,0 +1,80 @@
+# gdelt-p104 — chunked GDELT 1.0 daily aggregate build.
+#
+# Each run processes a bounded chunk of days (default 400 new days or
+# 300 minutes of wall clock, whichever comes first), commits the updated
+# checkpoint partials back to this repo, and stops cleanly. The next run
+# resumes from the committed partials. When all 3,653 days are present,
+# run.sh assembles the frozen parquet and this workflow uploads it as an
+# artifact (it is never committed).
+#
+# Triggers: manual dispatch (inputs below) or every 4 hours on schedule.
+# Pushes made by this workflow (GITHUB_TOKEN) do not trigger other
+# workflows, so the schedule — not the push — drives the loop.
+# Concurrency: one run at a time; a second trigger waits, never cancels.
+name: gdelt-p104
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_days:
+        description: "Max NEW days to process this run"
+        required: false
+        default: "400"
+        type: string
+      max_minutes:
+        description: "Wall-clock budget in minutes (job limit is 360)"
+        required: false
+        default: "300"
+        type: string
+  schedule:
+    - cron: "0 */4 * * *"
+
+concurrency:
+  group: gdelt-p104
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build chunk
+        env:
+          MAX_DAYS: ${{ inputs.max_days || '400' }}
+          MAX_MINUTES: ${{ inputs.max_minutes || '300' }}
+        run: bash gdelt-p104/run.sh
+
+      - name: Commit updated partials
+        # Always checkpoint: even a failed run must not lose the days it
+        # already aggregated (the worker appends + flushes per day).
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gdelt-p104/partials/partial_*.csv
+          if git diff --cached --quiet; then
+            echo "no partial changes to commit"
+          else
+            DAYS_DONE=$(python3 -c "import glob; print(sum(sum(1 for _ in open(f)) - 1 for f in glob.glob('gdelt-p104/partials/partial_*.csv')))")
+            git commit -m "gdelt-p104: checkpoint partials ${DAYS_DONE}/3653 days (run #${{ github.run_number }})"
+          fi
+          git push
+
+      - name: Upload frozen file (final run only)
+        if: always() && hashFiles('gdelt-p104/partials/gdelt_daily_frozen_2024.parquet') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdelt-daily-frozen-2024
+          path: gdelt-p104/partials/gdelt_daily_frozen_2024.parquet
+          retention-days: 30
+          if-no-files-found: error
